@@ -113,6 +113,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 Kosongkan Keranjang
               </button>
               <button
+                onClick={() => { window.location.href = "/checkout"; }}
                 className="w-full py-3 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition"
               >
                 Lanjutkan Checkout
