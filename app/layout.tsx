@@ -6,8 +6,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ZarStyle - Fashion E-Commerce",
-  description: "Toko online fashion modern dengan koleksi pakaian terbaik",
+  title: "ZarStyle — Pakaian yang terasa seperti dirimu",
+  description: "Temukan koleksi fashion pilihan ZarStyle: potongan timeless, material istimewa, dan gaya untuk setiap hari.",
+  themeColor: "#f8f7f4",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

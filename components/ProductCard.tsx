@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart } from "lucide-react";
+import { ArrowUpRight, ShoppingBag } from "lucide-react";
 
 interface ProductCardProps {
   product: {
@@ -13,42 +13,23 @@ interface ProductCardProps {
     image: string;
     category: string;
   };
+  index?: number;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { addItem } = useCart();
 
   return (
-    <Link href={`/products/${product.id}`} className="block">
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition">
-        <div className="h-48 bg-gray-100 relative overflow-hidden">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover"
-          />
-          <span className="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-medium">
-            {product.category}
-          </span>
-        </div>
-        <div className="p-4">
-          <h3 className="font-semibold text-gray-900">{product.name}</h3>
-          <div className="mt-2 flex items-center gap-2">
-            <span className="font-bold text-pink-600">Rp {product.price.toLocaleString()}</span>
-          </div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addItem(product.id);
-            }}
-            className="mt-4 w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition text-sm font-medium flex items-center justify-center gap-2"
-          >
-            <ShoppingCart size={14} />
-            Tambah ke Keranjang
-          </button>
-        </div>
+    <article className="group min-w-0">
+      <div className="relative overflow-hidden bg-[#eeece8]">
+        <Link href={`/products/${product.id}`} aria-label={`Lihat ${product.name}`} className="relative block aspect-[.76] overflow-hidden">
+          <Image src={product.image} alt={product.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover transition duration-700 group-hover:scale-[1.04]" />
+        </Link>
+        <span className="absolute left-3 top-3 bg-[#f8f7f4]/90 px-2.5 py-1.5 text-[9px] uppercase tracking-[0.15em] text-[#514a40] sm:left-4 sm:top-4">{index < 2 ? "Pilihan Editor" : product.category}</span>
+        <button type="button" aria-label={`Tambah ${product.name} ke keranjang`} onClick={() => addItem(product.id)} className="absolute bottom-3 right-3 grid size-10 place-items-center rounded-full bg-[#f8f7f4] text-[#292923] transition hover:bg-[#292923] hover:text-white sm:bottom-4 sm:right-4 sm:size-11"><ShoppingBag size={16} /></button>
       </div>
-    </Link>
+      <div className="flex items-start justify-between gap-2 pt-4 sm:pt-5"><div className="min-w-0"><p className="mb-1.5 text-[9px] uppercase tracking-[0.17em] text-[#8b8378]">{product.category}</p><Link href={`/products/${product.id}`} className="line-clamp-2 font-serif text-base leading-snug transition hover:text-[#9a7254] sm:text-lg">{product.name}</Link></div><ArrowUpRight className="mt-1 shrink-0 text-[#958d82]" size={15} /></div>
+      <p className="mt-2 text-xs text-[#514a40] sm:text-sm">Rp {product.price.toLocaleString("id-ID")}</p>
+    </article>
   );
 }
