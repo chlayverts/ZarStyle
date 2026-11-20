@@ -4,54 +4,56 @@ import ProductCard from "@/components/ProductCard";
 import CartButton from "@/components/CartButton";
 import CartDrawer from "@/components/CartDrawer";
 import { products } from "@/lib/products";
-import { ArrowDown, ArrowRight, Instagram, Menu, MoveUpRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Instagram, Menu, MoveUpRight, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 const categories = [
-  { name: "Wanita", label: "Silhouettes for her", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
-  { name: "Pria", label: "Modern essentials", image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
-  { name: "Sepatu", label: "Made to move", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
+  { name: "Wanita", label: "Pilihan untuk perempuan", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
+  { name: "Pria", label: "Esensial pria modern", image: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
+  { name: "Sepatu", label: "Langkah sehari-hari", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=85", href: "#koleksi" },
 ];
 
 export default function HomePage() {
   const [cartOpen, setCartOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f8f7f4] text-[#1e1e1b]">
+      <a href="#konten-utama" className="skip-link">Lewati ke konten utama</a>
       <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
-      <div className="bg-[#292923] px-4 py-2.5 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-white sm:text-[11px]">
-        Complimentary shipping on orders over Rp 1.500.000 <span className="mx-2 text-white/40">·</span> Discover the new collection
+      <div className="bg-[#292923] px-4 py-2.5 text-center text-[10px] font-medium uppercase tracking-[0.16em] text-white sm:text-[11px] sm:tracking-[0.2em]">
+        Koleksi pilihan untuk gaya yang terasa seperti dirimu <span className="mx-2 text-white/40">·</span> Temukan ZarStyle
       </div>
       <header className="sticky top-0 z-40 border-b border-black/[0.07] bg-[#f8f7f4]/95 backdrop-blur-md">
         <nav aria-label="Navigasi utama" className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14">
-          <button aria-label="Buka menu" className="flex items-center gap-2 text-sm md:hidden"><Menu size={20} /><span className="sr-only">Menu</span></button>
+          <button type="button" aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"} aria-expanded={mobileMenuOpen} aria-controls="menu-seluler" onClick={() => setMobileMenuOpen((open) => !open)} className="flex items-center text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9a7254] md:hidden">{mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}</button>
           <div className="hidden items-center gap-8 text-[11px] font-medium uppercase tracking-[0.16em] md:flex">
-            <a href="#kategori" className="transition hover:text-[#9a7254]">Wanita</a>
-            <a href="#kategori" className="transition hover:text-[#9a7254]">Pria</a>
-            <a href="#koleksi" className="transition hover:text-[#9a7254]">Koleksi</a>
+            <a href="#kategori" className="transition hover:text-[#9a7254] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9a7254]">Wanita</a>
+            <a href="#kategori" className="transition hover:text-[#9a7254] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9a7254]">Pria</a>
+            <a href="#koleksi" className="transition hover:text-[#9a7254] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9a7254]">Koleksi</a>
           </div>
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 font-serif text-[27px] tracking-[0.11em] sm:text-[30px]">ZARSTYLE</Link>
+          <Link href="/" translate="no" className="absolute left-1/2 -translate-x-1/2 font-serif text-[27px] tracking-[0.11em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9a7254] sm:text-[30px]">ZARSTYLE</Link>
           <div className="flex items-center gap-4 sm:gap-6">
-            <a href="#tentang" className="hidden text-[11px] font-medium uppercase tracking-[0.16em] transition hover:text-[#9a7254] sm:block">Cerita Kami</a>
+            <a href="#tentang" className="hidden text-[11px] font-medium uppercase tracking-[0.16em] transition hover:text-[#9a7254] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9a7254] sm:block">Cerita Kami</a>
             <CartButton onClick={() => setCartOpen(true)} />
           </div>
         </nav>
+        {mobileMenuOpen && <nav id="menu-seluler" aria-label="Navigasi seluler" className="flex flex-col border-t border-black/[0.07] bg-[#f8f7f4] px-6 py-3 md:hidden">{[{ label: "Wanita", href: "#kategori" }, { label: "Pria", href: "#kategori" }, { label: "Koleksi", href: "#koleksi" }, { label: "Cerita Kami", href: "#tentang" }].map((item) => <a key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)} className="border-b border-black/[0.06] py-3 text-[11px] uppercase tracking-[0.16em] last:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#9a7254]">{item.label}</a>)}</nav>}
       </header>
 
-      <main>
+      <main id="konten-utama">
         <section className="relative isolate min-h-[600px] overflow-hidden bg-[#38352e] sm:min-h-[680px] lg:min-h-[min(760px,78vw)]">
           <div className="absolute inset-0 -z-10 bg-cover bg-[center_38%]" style={{ backgroundImage: "linear-gradient(90deg, rgba(22,22,19,.57) 0%, rgba(22,22,19,.21) 54%, rgba(22,22,19,.03) 100%), url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=2200&auto=format&fit=crop&q=90')" }} />
           <div className="mx-auto flex min-h-[600px] max-w-[1440px] items-center px-6 py-20 sm:min-h-[680px] sm:px-10 lg:min-h-[min(760px,78vw)] lg:px-20">
             <div className="max-w-xl text-white">
-              <p className="mb-6 text-[10px] font-medium uppercase tracking-[0.3em] text-white/80 sm:text-xs">Koleksi musim terbaru · 2025</p>
+              <p className="mb-6 text-[10px] font-medium uppercase tracking-[0.3em] text-white/80 sm:text-xs">Pilihan ZarStyle · Koleksi terbaru</p>
               <h1 className="font-serif text-[58px] leading-[.98] tracking-[-0.045em] sm:text-7xl lg:text-[92px]">Berpakaian<br /><em className="font-normal">dengan rasa.</em></h1>
               <p className="mt-7 max-w-sm text-sm leading-7 text-white/80 sm:text-base">Potongan yang tenang. Material yang terasa istimewa. Gaya yang menjadi milikmu.</p>
               <a href="#koleksi" className="mt-9 inline-flex items-center gap-4 border border-white/70 px-6 py-4 text-[10px] font-medium uppercase tracking-[0.2em] transition hover:bg-white hover:text-[#1e1e1b]">Jelajahi koleksi <ArrowRight size={15} /></a>
             </div>
           </div>
           <a href="#kategori" aria-label="Lihat kategori" className="absolute bottom-8 right-8 hidden items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-white/80 md:flex">Scroll untuk menjelajah <ArrowDown size={14} /></a>
-          <span className="absolute bottom-8 left-8 text-[10px] uppercase tracking-[0.22em] text-white/70">01 — 03</span>
         </section>
 
         <section id="kategori" className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-28 lg:px-14">
@@ -85,7 +87,7 @@ export default function HomePage() {
 
         <section className="bg-[#eae6df] px-5 py-16 text-center sm:py-20"><p className="eyebrow">Ikuti kisah kami</p><h2 className="mt-3 font-serif text-4xl sm:text-5xl">Gaya sehari-hari, lebih bermakna.</h2><a href="#kategori" className="mt-7 inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em]"><Instagram size={15} /> @zarstyle <ArrowRight size={14} /></a></section>
       </main>
-      <footer className="bg-[#292923] px-5 py-10 text-white sm:px-8 lg:px-14"><div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><Link href="/" className="font-serif text-2xl tracking-[0.12em]">ZARSTYLE</Link><p className="text-[10px] uppercase tracking-[0.16em] text-white/60">Dibuat untuk menemani harimu · © 2025 ZarStyle</p><a href="#" className="text-[10px] uppercase tracking-[0.16em] text-white/70 transition hover:text-white">Kebijakan & Bantuan</a></div></footer>
+      <footer className="bg-[#292923] px-5 py-10 text-white sm:px-8 lg:px-14"><div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><Link href="/" className="font-serif text-2xl tracking-[0.12em]">ZARSTYLE</Link><p className="text-[10px] uppercase tracking-[0.16em] text-white/60">Dibuat untuk menemani harimu · © ZarStyle</p><p className="text-[10px] uppercase tracking-[0.16em] text-white/70">Gaya yang terasa seperti dirimu</p></div></footer>
     </div>
   );
 }

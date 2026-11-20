@@ -28,6 +28,10 @@ body {
   @apply text-[10px] font-medium uppercase tracking-[0.24em] text-[#9a7254];
 }
 
+.skip-link {
+  @apply fixed left-4 top-4 -translate-y-24 bg-[#292923] px-4 py-3 text-sm text-white transition-transform focus:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a7254];
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
