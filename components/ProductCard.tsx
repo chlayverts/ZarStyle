@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+import { ShoppingCart } from "lucide-react";
 
 interface ProductCardProps {
   product: {
@@ -12,6 +16,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart();
+
   return (
     <Link href={`/products/${product.id}`} className="block">
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition">
@@ -31,7 +37,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-2 flex items-center gap-2">
             <span className="font-bold text-pink-600">Rp {product.price.toLocaleString()}</span>
           </div>
-          <button className="mt-4 w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition text-sm font-medium">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              addItem(product.id);
+            }}
+            className="mt-4 w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition text-sm font-medium flex items-center justify-center gap-2"
+          >
+            <ShoppingCart size={14} />
             Tambah ke Keranjang
           </button>
         </div>
